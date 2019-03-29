@@ -1,0 +1,14 @@
+﻿@model TrainDelay.Models.GeometryList
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id='myMap' style="position:relative;width:100%;height:70vh;"></div>
+<script>
+    var array = [];
+
+    @foreach (var item in Model.Geometries)
+    {
+        @:array.push("@item.WGS84");
+    }
+</script>

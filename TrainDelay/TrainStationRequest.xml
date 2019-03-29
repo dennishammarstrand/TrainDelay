@@ -1,0 +1,8 @@
+﻿<REQUEST>
+      <LOGIN authenticationkey="dc63dc1e71534f8788cd8d971aff6af9" />
+      <QUERY objecttype="TrainStation">
+        <FILTER>
+          <EQ name="CountyNo" value="13" />
+        </FILTER>
+      </QUERY>
+</REQUEST>
