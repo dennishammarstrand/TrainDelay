@@ -1,0 +1,10 @@
+﻿<REQUEST>
+      <LOGIN authenticationkey="dc63dc1e71534f8788cd8d971aff6af9" />
+      <QUERY objecttype="TrainAnnouncement">
+        <FILTER>
+          <EQ name="ToLocation.LocationName" value="G" />
+          <EQ name="ViaFromLocation.LocationName" value="Vb" />
+          <EQ name="InformationOwner" value="Öresundståg" />
+        </FILTER>
+      </QUERY>
+</REQUEST>

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace TrainDelay.Models
 {
-    public class ResultItem
+    public class TrafikverketResponse
     {
-        public List<TrainStation> TrainStation { get; set; }
+        public ResponseItem Response { get; set; }
     }
 }

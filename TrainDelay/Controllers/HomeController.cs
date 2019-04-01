@@ -16,20 +16,30 @@ namespace TrainDelay.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index()
+        private HttpClient client;
+
+        public HomeController(IHttpClientFactory httpClientFactory)
         {
-            HttpClient client = new HttpClient();
-            var httpContent = new StringContent(System.IO.File.ReadAllText("TrainStationRequest.xml"), Encoding.UTF8, "application/xml");
-            var response = await client.PostAsync("http://api.trafikinfo.trafikverket.se/v1.3/data.json", httpContent);
-            var json = await response.Content.ReadAsStringAsync();
-            var value = JsonConvert.DeserializeObject<TrafikverketStationsResponse>(await response.Content.ReadAsStringAsync());
-            var coord = new GeometryList() { Geometries = new List<Geometry>() };
-            value.Response.Result.ForEach(x => x.TrainStation.ForEach(z => coord.Geometries.Add(z.Geometry)));
-            return View(coord);
+            client = httpClientFactory.CreateClient("Trafikverket");
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Index()
         {
+            var httpContent = new StringContent(System.IO.File.ReadAllText("TrainStationRequest.xml"), Encoding.UTF8, "application/xml");
+            var response = await client.PostAsync("/v1.3/data.json", httpContent);
+            var json = await response.Content.ReadAsStringAsync();
+            var desResponse = JsonConvert.DeserializeObject<TrafikverketResponse>(await response.Content.ReadAsStringAsync());
+            var geometryList = new GeometryList() { Geometries = new List<Geometry>() };
+            desResponse.Response.Result.ForEach(x => x.TrainStation.ForEach(z => geometryList.Geometries.Add(z.Geometry)));
+            return View(geometryList);
+        }
+
+        public async Task<IActionResult> Privacy()
+        {
+            var httpContent = new StringContent(System.IO.File.ReadAllText("TrainAnnouncementRequest.xml"), Encoding.UTF8);
+            var response = await client.PostAsync("/v1.3/data.json", httpContent);
+            var json = await response.Content.ReadAsStringAsync();
+            var desResponse = JsonConvert.DeserializeObject<TrafikverketResponse>(await response.Content.ReadAsStringAsync());
             return View();
         }
 

@@ -31,6 +31,11 @@ namespace TrainDelay
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddHttpClient("Trafikverket", c =>
+            {
+                c.BaseAddress = new Uri("http://api.trafikinfo.trafikverket.se");
+                c.DefaultRequestHeaders.Add("Accept", "application/xml");
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

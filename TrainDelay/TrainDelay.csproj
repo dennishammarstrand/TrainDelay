@@ -14,6 +14,9 @@
 
 
   <ItemGroup>
+    <None Update="TrainAnnouncementRequest.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TrainStationRequest.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
